@@ -299,6 +299,13 @@ def _in_document(node):
         node = node.parentNode
     return False
 
+def _write_text_data(writer, data):
+    "Writes datachars of text node to writer."
+    if data:
+        data = data.replace("&", "&amp;").replace("<", "&lt;"). \
+                    replace(">", "&gt;")
+        writer.write(data)
+
 def _write_data(writer, data):
     "Writes datachars to writer."
     if data:
@@ -1086,7 +1093,7 @@ class Text(CharacterData):
         return newText
 
     def writexml(self, writer, indent="", addindent="", newl=""):
-        _write_data(writer, "%s%s%s" % (indent, self.data, newl))
+        _write_text_data(writer, "%s%s%s" % (indent, self.data, newl))
 
     # DOM Level 3 (WD 9 April 2002)
 
